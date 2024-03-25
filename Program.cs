@@ -299,11 +299,11 @@ void SaveMemoryValuesToFile(string[] dates, double[] values, int logicalSize)
 					{
 						Console.WriteLine(savedFile[i]);
 					}
-					Console.WriteLine($"\nData has been saved. \nPlease note that the values that belong to the existing dates are not changed through Adding.\nIt should be changed in the 'Edit' section.");
+					Console.WriteLine($"\nData has been saved, except for the values that have the existing dates(if any).\nFor values assigned to existing dates, you can change in the 'Edit' section.");
 				}
 				if (saveFailChecker && !addingChecker)
 				{
-					Console.WriteLine($"Data has not been saved due to existing data. Edit first.");
+					Console.WriteLine($"Data has not been saved due to existing data for the date. Edit first.");
 				}
 			}
 			else
@@ -362,7 +362,7 @@ int AddMemoryValues(string[] dates, double[] values, int logicalSize, double max
 					}
 					else
 					{
-						Console.WriteLine($"Invalid input for the date. Please EXACTLY follow the format.");
+						Console.WriteLine($"Invalid input for the date. Please follow the EXACT format.\ne.g.)11-3-2023(X)\n     11-03-2023(O)");
 					}
 					if (logicalSize != 0)
 					{
@@ -413,7 +413,7 @@ int AddMemoryValues(string[] dates, double[] values, int logicalSize, double max
 				}
 
 				logicalSize++;
-				Console.WriteLine($"Data has been added to the MEMORY.\nYour logicalSize is {logicalSize}.\nBut it hasn't been saved onto the file yet.");
+				Console.WriteLine($"\nData has been added to the MEMORY.\nYour logicalSize is {logicalSize}. But it hasn't been saved onto the file yet.");
 
 			}
 			else if (addMemoryYesOrNo == "N")
@@ -451,7 +451,7 @@ void EditMemoryValues(string[] dates, double[] values, int logicalSize, double m
 	{
 		while (invalidEditDate)
 		{
-			Console.WriteLine($"If you want to cancel edit, enter Q");
+			Console.WriteLine($"\nIf you want to cancel edit, enter Q");
 			Console.Write($"Enter the date of which you want to change the value (e.g MM-dd-yyyy): ");
 			searchString = Console.ReadLine();
 			if (searchString == "Q" || searchString == "q")
@@ -479,7 +479,7 @@ void EditMemoryValues(string[] dates, double[] values, int logicalSize, double m
 			}
 			else
 			{
-				Console.WriteLine($"Invalid input for the date. Please EXACTLY follow the format.");
+				Console.WriteLine($"Invalid input for the date. Please follow the EXACT format.\ne.g.)11-3-2023(X)\n     11-03-2023(O)");
 			}
 		}
 		while (invalidEditValue)
