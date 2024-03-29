@@ -150,7 +150,7 @@ void DisplayMemoryValues(string[] dates, double[] values, int logicalSize)
 {
 	if (logicalSize == 0)
 		throw new Exception($"No Entries loaded. Please load a file to memory or add a value in memory");
-	Array.Sort(dates,values,0,logicalSize);
+	Array.Sort(dates, values, 0, logicalSize);
 	Console.WriteLine($"\nCurrent Loaded Entries: {logicalSize}");
 	Console.WriteLine($"   Date       Value");
 	for (int i = 0; i < logicalSize; i++)
@@ -182,7 +182,7 @@ double FindLowestValueInMemory(double[] values, int logicalSize)
 			min = values[i];
 		}
 	}
-	Console.WriteLine($"your minimum value for this file is : {min:c2}");
+	Console.WriteLine($"Your minimum value from the current memory is : {min:c2}");
 	return min;
 }
 
@@ -194,7 +194,7 @@ void FindAverageOfValuesInMemory(double[] values, int logicalSize)
 		sum += values[i];
 	}
 	double average = sum / logicalSize;
-	Console.WriteLine($"The average sales value from this file is: {average:c2}");
+	Console.WriteLine($"The average sales value from the current memory is: {average:c2}");
 }
 
 void SaveMemoryValuesToFile(string[] dates, double[] values, int logicalSize)
@@ -234,43 +234,29 @@ void SaveMemoryValuesToFile(string[] dates, double[] values, int logicalSize)
 				values[foundIndex] = editedValue;
 				File.WriteAllLines(savePath, loadedFile);
 
-				
+
 			}
 
 			if (File.Exists(savePath) && (editFinishedBool != true))
 			{
-				// 기존 파일이 있는 경우, 기존 내용을 읽어들여 리스트에 저장
 				List<string> allLines = new List<string>(File.ReadAllLines(savePath));
 				List<string> dateList = new List<string>(); // 날짜를 담을 새로운 리스트
 
-				// allLines 리스트를 반복하여 각 요소에서 날짜를 추출하여 dateList에 추가
 				foreach (var line in allLines)
 				{
-					string[] lineParts = line.Split(','); // 각 줄을 쉼표로 분리하여 배열로 저장
-					string date = lineParts[0]; // 첫 번째 요소는 날짜
-					dateList.Add(date); // 날짜를 dateList에 추가
+					string[] lineParts = line.Split(',');
+					string date = lineParts[0];
+					dateList.Add(date);
 				}
-				// foreach (var item in allLines)
-				// {
-				// 	string existingDate = item.Split(',')[0];
-				// 	for (int i = 0; i < allLines.Count; i++)
-				// 	{
-				// 		if (existingDate == dates[i])
-				// 		{
-				// 			throw new Exception($"Failed. Existing Data for the date.\nIf you want to change the data, go to Edit.");
-				// 		}
-				// 	}
-
-				// }
 
 				bool addingChecker = false;
 				bool saveFailChecker = false;
-				// 새로운 데이터를 추가
+
 				for (int i = 0; i < logicalSize; i++)
 				{
 					string newDataDate = dates[i];
 					string newData = $"{dates[i]},{values[i]}";
-					// 중복 여부 확인
+
 					if (dateList.Contains(newDataDate))
 					{
 						saveFailChecker = true;
@@ -281,7 +267,7 @@ void SaveMemoryValuesToFile(string[] dates, double[] values, int logicalSize)
 						addingChecker = true;
 					}
 				}
-				// 파일에 리스트의 내용을 다시 씀
+
 				File.WriteAllLines(savePath, allLines);
 				if (addingChecker && !saveFailChecker)
 				{
@@ -308,15 +294,13 @@ void SaveMemoryValuesToFile(string[] dates, double[] values, int logicalSize)
 			}
 			else
 			{
-				// 파일이 없는 경우, 새로운 파일을 생성하여 데이터를 저장
 				List<string> allLines = new List<string>();
 				allLines.Add("Dates,Values");
 
-				// 배열 크기를 실제 데이터 크기에 맞게 조절하여 데이터를 추가
 				for (int i = 0; i < logicalSize; i++)
 				{
 					string newData = $"{dates[i]},{values[i]}";
-					// 중복 여부 확인
+
 					if (!allLines.Contains(newData))
 					{
 						allLines.Add(newData);
@@ -431,7 +415,6 @@ int AddMemoryValues(string[] dates, double[] values, int logicalSize, double max
 	{
 		Console.WriteLine(ex.Message);
 	}
-
 	return logicalSize;
 }
 
@@ -512,5 +495,5 @@ void EditMemoryValues(string[] dates, double[] values, int logicalSize, double m
 void GraphValuesInMemory(string[] dates, double[] values, int logicalSize)
 {
 	Console.WriteLine("Not Implemented Yet");
-	//TODO: Replace this code with yours to implement this function.
+	//Sorry couldn't do it.
 }
