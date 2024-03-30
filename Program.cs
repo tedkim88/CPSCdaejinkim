@@ -495,20 +495,33 @@ void EditMemoryValues(string[] dates, double[] values, int logicalSize, double m
 void GraphValuesInMemory(string[] dates, double[] values, int logicalSize)
 {
 	//still working on it..but it's hard. wanted to get the date and give a value to a certain position, but don't know how to yet..
-	string dateSpacing = " ";
+	string dateSpacing = "  ";
 	string dayPart = "";
+	string anotherDayPart = "";
+	bool alreadyAddedBool = false;
+	int previousLength=0;
 	Array.Sort(dates, values, 0, logicalSize);
 	for (int i = 700; i > -50; i = i - 50)
 	{
 		Console.Write($"{i:c0}");
 		for (int j = 0; j < logicalSize; j++)
 		{
-			if ((values[j] <= i) && (values[j] > i - 50))
+			if ((values[j] <= i) && (values[j] > i - 50) && alreadyAddedBool)
+			{
+				anotherDayPart = dates[j].Substring(3, 2);
+				Console.Write(values[j].ToString().PadLeft(values[j].ToString().Length - previousLength + (int.Parse(anotherDayPart) - int.Parse(dayPart)) * 3));
+				dayPart = dates[j].Substring(3,2);
+			}
+			if ((values[j] <= i) && (values[j] > i - 50) && (!alreadyAddedBool))
 			{
 				dayPart = dates[j].Substring(3, 2);
-				Console.Write(values[j].ToString().PadLeft(values[j].ToString().Length + 2*int.Parse(dayPart)));
+				previousLength = values[j].ToString().Length;
+				Console.Write(values[j].ToString().PadLeft(values[j].ToString().Length + int.Parse(dayPart) * 2 + (int.Parse(dayPart) - 2)));
+				alreadyAddedBool = true;
+
 			}
 		}
+		alreadyAddedBool=false;
 		Console.WriteLine($"");
 	}
 
@@ -516,12 +529,11 @@ void GraphValuesInMemory(string[] dates, double[] values, int logicalSize)
 	{
 		if (i == 1)
 		{
-			Console.Write($"      {i}{dateSpacing}");
+			Console.Write($"     {i}{dateSpacing}");
 		}
 		if (i != 1)
 		{
 			Console.Write($"{i}{dateSpacing}");
 		}
 	}
-
 }
