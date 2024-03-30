@@ -495,8 +495,9 @@ void EditMemoryValues(string[] dates, double[] values, int logicalSize, double m
 void GraphValuesInMemory(string[] dates, double[] values, int logicalSize)
 {
 	//still working on it..but it's hard. wanted to get the date and give a value to a certain position, but don't know how to yet..
-	string dateSpacing = "  ";
+	string dateSpacing = " ";
 	string dayPart = "";
+	Array.Sort(dates, values, 0, logicalSize);
 	for (int i = 700; i > -50; i = i - 50)
 	{
 		Console.Write($"{i:c0}");
@@ -505,7 +506,7 @@ void GraphValuesInMemory(string[] dates, double[] values, int logicalSize)
 			if ((values[j] <= i) && (values[j] > i - 50))
 			{
 				dayPart = dates[j].Substring(3, 2);
-				Console.Write(values[j].ToString().PadLeft(values[j].ToString().Length + 3 * int.Parse(dayPart)));
+				Console.Write(values[j].ToString().PadLeft(values[j].ToString().Length + 2*int.Parse(dayPart)));
 			}
 		}
 		Console.WriteLine($"");
