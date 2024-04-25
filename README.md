@@ -1,1 +1,1 @@
-CPSC-1012. daejin kim NAIT CSD
+CPSC-1012. daejin kim SEC A02 NAIT CSD
