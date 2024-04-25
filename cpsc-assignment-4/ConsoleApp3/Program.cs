@@ -78,13 +78,12 @@ while (goAgain)
         }
         else if (mainMenuChoice == "F")
         {
-            Console.WriteLine(listOfClients[2]);
+            FindClient(listOfClients);
 
         }
         else if (mainMenuChoice == "R")
         {
-            Console.WriteLine($"Not implemented yet.");
-
+            RemoveClient(listOfClients);
         }
 
         else
@@ -267,6 +266,59 @@ void SaveMemoryValuesToFile(List<Client> listOfClients)
     }
 }
 
+
+void FindClient(List<Client> listOfClients)
+{
+    bool found = false;
+    string findLastName = Prompt("Enter the last name for finding a client: ");
+    string findFirstName = Prompt("Enter the first name for finding a client: ");
+
+    foreach (Client client in listOfClients)
+    {
+        if (client.LastName.Equals(findLastName, StringComparison.OrdinalIgnoreCase) && 
+            client.FirstName.Equals(findFirstName, StringComparison.OrdinalIgnoreCase))
+        {
+            Console.WriteLine("\nFound Client:");
+            ShowClient(client);
+            found = true;
+            break; // 첫 번째 일치하는 항목을 찾으면 반복문 종료
+        }
+    }
+
+    if (!found)
+    {
+        Console.WriteLine($"Client '{findFirstName} {findLastName}' not found.");
+    }
+}
+
+
+void RemoveClient(List<Client> listOfClients)
+{
+    string findLastName = Prompt("Enter the last name of the client to remove: ");
+    string findFirstName = Prompt("Enter the first name of the client to remove: ");
+
+    // 해당 성과 이름을 가진 클라이언트 찾기
+    Client clientToRemove = listOfClients.Find(client =>
+        client.LastName.Equals(findLastName, StringComparison.OrdinalIgnoreCase) &&
+        client.FirstName.Equals(findFirstName, StringComparison.OrdinalIgnoreCase));
+
+    // 클라이언트가 찾아졌는지 확인 후 제거
+    if (clientToRemove != null)
+    {
+        listOfClients.Remove(clientToRemove);
+        Console.WriteLine($"Client '{findFirstName} {findLastName}' removed successfully.");
+
+        // 변경된 상태를 파일에 저장
+        SaveMemoryValuesToFile(listOfClients);
+    }
+    else
+    {
+        Console.WriteLine($"Client '{findFirstName} {findLastName}' not found in the list.");
+    }
+}
+
+
+     
 
 // void SaveMemoryValuesToFile(List<Client> listOfClients)
 // {
